@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>EGOS KEYS</title>
+    <style>
+        /* --- CORE STYLING --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            background-color: #020204;
+            color: #f3f4f6;
+            overflow: hidden;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Canvas de estelas de luz cibernéticas (Fondo Avanzado) */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Contenedor principal centrado */
+        .wrapper {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 900;
+            background: linear-gradient(90deg, #00ffff, #ff0055);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            text-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+            font-style: italic;
+        }
+
+        .subtitle {
+            font-size: 11px;
+            color: #00ffff;
+            letter-spacing: 3px;
+            margin-top: 6px;
+            text-transform: uppercase;
+            font-weight: bold;
+            opacity: 0.8;
+        }
+
+        /* --- CONTENEDORES DE FLUJO (Efecto Cyber-Glass) --- */
+        .section-flow {
+            display: none;
+            width: 100%;
+            max-width: 400px;
+            background: rgba(6, 6, 10, 0.85);
+            border: 1px solid rgba(0, 255, 255, 0.15);
+            border-top: 2px solid #ff0055;
+            border-radius: 12px;
+            padding: 30px 24px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), inset 0 1px 2px rgba(255, 255, 255, 0.05);
+        }
+        
+        .section-flow.active {
+            display: block;
+            animation: cyberGate 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .step-indicator {
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 3px solid #00ffff;
+            padding: 12px 16px;
+            margin-bottom: 25px;
+            font-size: 13px;
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        /* --- BOTONES PROFESIONALES DE ACCIÓN --- */
+        .btn-premium {
+            position: relative;
+            background: linear-gradient(90deg, #ff0055, #bd003f);
+            color: #fff;
+            border: none;
+            padding: 16px;
+            font-size: 13px;
+            font-weight: 800;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(255, 0, 85, 0.3);
+            overflow: hidden;
+        }
+
+        .btn-premium::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn-premium:active {
+            transform: scale(0.98);
+        }
+        
+        .btn-premium:disabled {
+            background: #111116 !important;
+            color: #4b5563 !important;
+            border: 1px solid rgba(255, 255, 255, 0.05) !important;
+            cursor: not-allowed;
+            box-shadow: none !important;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid #00ffff;
+            color: #00ffff;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
+            margin-top: 15px;
+        }
+
+        /* --- CUADRO DE ENTREGA DE KEY --- */
+        .key-box {
+            background: #040406;
+            border: 1px dashed #ff0055;
+            padding: 20px;
+            border-radius: 6px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 24px;
+            font-weight: bold;
+            color: #00ffff;
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+            margin: 25px 0;
+            letter-spacing: 2px;
+            text-align: center;
+            box-shadow: inset 0 0 15px rgba(255, 0, 85, 0.1);
+        }
+
+        /* --- ANIMACIONES DE INTERFAZ --- */
+        @keyframes cyberGate {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            font-size: 10px;
+            color: #4b5563;
+            z-index: 2;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="particles-canvas"></canvas>
+
+    <div class="wrapper">
+        <header>
+            <h1>EGOS KEYS</h1>
+            <div class="subtitle">SECURITY INTERFACE SYSTEM</div>
+        </header>
+
+        <!-- FASE 1: YOUTUBE -->
+        <div id="section1" class="section-flow active">
+            <div class="step-indicator">
+                <span style="color: #ff0055; font-weight: bold; display:block; margin-bottom:4px; letter-spacing: 1px;">[ACCESO FASE 01]</span>
+                Suscripción mandatoria requerida en los servidores de distribución multimedia.
+            </div>
+
+            <button class="btn-premium" style="background: linear-gradient(90deg, #ff0000, #b30000); box-shadow: 0 4px 20px rgba(255,0,0,0.25);" onclick="actionYouTube()">
+                🟥 VERIFICAR YOUTUBE CHANNEL
+            </button>
+
+            <p id="status-text-1" style="font-size: 12px; color:#6b7280; margin-top: 20px; text-align: center; font-family: monospace;">
+                Aguardando redirección externa...
+            </p>
+            
+            <button class="btn-premium btn-secondary" id="btn-next-1" disabled onclick="changeSection(1, 2)">
+                CONTINUAR EJECUCIÓN
+            </button>
+        </div>
+
+        <!-- FASE 2: INSTAGRAM & TIKTOK -->
+        <div id="section2" class="section-flow">
+            <div class="step-indicator">
+                <span style="color: #00ffff; font-weight: bold; display:block; margin-bottom:4px; letter-spacing: 1px;">[ACCESO FASE 02]</span>
+                Sincronización de credenciales sociales obligatoria para el registro del terminal HWID.
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <button class="btn-premium" style="background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #fd1d1d); box-shadow: 0 4px 20px rgba(193,53,132,0.25);" onclick="actionInstagram()">
+                    📸 ENLAZAR INSTAGRAM PROFILE
+                </button>
+                <button class="btn-premium" style="background: linear-gradient(90deg, #111, #222); border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 4px 20px rgba(0,0,0,0.5);" onclick="actionTikTok()">
+                    🎵 ENLAZAR TIKTOK PROTOCOL
+                </button>
+            </div>
+
+            <p id="status-text-2" style="font-size:11px; color:#6b7280; margin-top: 20px; text-align:center; font-family: monospace;">
+                [ESTADO]: Faltan módulos por corroborar.
+            </p>
+
+            <button class="btn-premium btn-secondary" id="btn-next-2" disabled onclick="changeSection(2, 3)">
+                AVANZAR ENCRIPTACIÓN
+            </button>
+        </div>
+
+        <!-- FASE 3: COMUNIDADES DE WHATSAPP -->
+        <div id="section3" class="section-flow">
+            <div class="step-indicator">
+                <span style="color: #00ffaa; font-weight: bold; display:block; margin-bottom:4px; letter-spacing: 1px;">[FASE FINAL 03]</span>
+                Vincular terminal a las bases de datos de parches y servidores de contingencia.
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <button class="btn-premium" style="background: linear-gradient(90deg, #075e54, #128c7e); box-shadow: 0 4px 20px rgba(18,140,126,0.25);" onclick="actionWhatsApp(1)">
+                    🟢 ACCEDER A COMUNIDAD 01
+                </button>
+                <button class="btn-premium" style="background: linear-gradient(90deg, #075e54, #128c7e); box-shadow: 0 4px 20px rgba(18,140,126,0.25);" onclick="actionWhatsApp(2)">
+                    🟢 ACCEDER A COMUNIDAD 02
+                </button>
+            </div>
+
+            <p style="font-size:11px; color:#4b5563; margin-top: 20px; text-align:center; font-family: monospace;">
+                Inscríbete en los dos servidores de red para terminar.
+            </p>
+
+            <button class="btn-premium" id="btn-final-unlock" disabled style="background: linear-gradient(90deg, #00ffff, #00b3b3); color: #000; box-shadow: 0 4px 25px rgba(0,255,255,0.3);" onclick="generateAndShowKey()">
+                GENERAR LLAVE MAESTRA
+            </button>
+        </div>
+
+        <!-- PANEL FINAL: ENTREGA DE ACCESO -->
+        <div id="section-final" class="section-flow">
+            <h3 style="color: #00ffaa; font-size: 16px; text-align: center; text-transform: uppercase; letter-spacing: 2px;">SISTEMA INYECTADO</h3>
+            <p style="font-size: 12px; color:#9ca3af; margin-top: 10px; text-align: center;">Copia tu token del día y pégalo en el panel del menú:</p>
+            
+            <div class="key-box" id="key-output">...</div>
+            
+            <p style="font-size:10px; color:#ff0055; text-align: center; text-transform: uppercase; letter-spacing: 1.5px; font-weight: bold;">DISPOSITIVO VERIFICADO SATISFACTORIAMENTE</p>
+        </div>
+    </div>
+
+    <footer>
+        [ SERVER CORE: ONLINE &bull; DEVELOPED BY EGOS TEAM &copy; 2026 ]
+    </footer>
+
+    <!-- --- LÓGICA LOGARÍTMICA --- -->
+    <script>
+        // Listado exacto de tus llaves fijas
+        const keysList = [
+            "Key4927gx", "Key6150bv", "Key8392lm", "Key1054kv",
+            "Key7283gx", "Key3516bv", "Key9407lm", "Key2681kv",
+            "Key5139gx", "Key8742bv"
+        ];
+
+        let instaClicked = false;
+        let tiktokClicked = false;
+        let wa1Clicked = false;
+        let wa2Clicked = false;
+
+        window.onload = function() {
+            initCyberTrails();
+        };
+
+        function changeSection(current, next) {
+            document.getElementById('section' + current).classList.remove('active');
+            document.getElementById('section' + next).classList.add('active');
+        }
+
+        // --- ACCIONES FASE 1 ---
+        function actionYouTube() {
+            window.open("https://youtube.com/@gael_ego?si=d_rF32c1C8Bb0WE9", "_blank");
+            
+            let time = 4;
+            const status = document.getElementById('status-text-1');
+            status.innerHTML = `[SCANNER]: Validando rastro del tráfico en ${time}s...`;
+
+            const interval = setInterval(() => {
+                time--;
+                status.innerHTML = `[SCANNER]: Validando rastro del tráfico en ${time}s...`;
+                if(time <= 0) {
+                    clearInterval(interval);
+                    status.innerHTML = ">> RECONOCIMIENTO EXITOSO. MÓDULO LISTO.";
+                    status.style.color = "#00ffff";
+                    document.getElementById('btn-next-1').disabled = false;
+                }
+            }, 1000);
+        }
+
+        // --- ACCIONES FASE 2 ---
+        function actionInstagram() {
+            window.open("https://www.instagram.com/gael_xits?igsh=enZhNjNrYjVyaXMy", "_blank");
+            instaClicked = true;
+            checkPhase2State();
+        }
+
+        function actionTikTok() {
+            window.open("https://www.tiktok.com/@.gael.ego?_r=1&_t=ZP-96UYox7t7LL", "_blank");
+            tiktokClicked = true;
+            checkPhase2State();
+        }
+
+        function checkPhase2State() {
+            if(instaClicked && tiktokClicked) {
+                document.getElementById('status-text-2').innerHTML = ">> ENLACES ENLAZADOS. ACCESO CONCEDIDO.";
+                document.getElementById('status-text-2').style.color = "#00ffff";
+                document.getElementById('btn-next-2').disabled = false;
+            }
+        }
+
+        // --- ACCIONES FASE 3 ---
+        function actionWhatsApp(num) {
+            if(num === 1) {
+                window.open("https://whatsapp.com/channel/0029Vb639Qn4tRrpGrvX2Q1N", "_blank");
+                wa1Clicked = true;
+            } else if(num === 2) {
+                window.open("https://whatsapp.com/channel/0029Vb76DiB72WU3eWKgH23Y", "_blank");
+                wa2Clicked = true;
+            }
+
+            if(wa1Clicked && wa2Clicked) {
+                document.getElementById('btn-final-unlock').disabled = false;
+            }
+        }
+
+        // --- ALGORITMO CRONOLÓGICO DE LA KEY ---
+        function generateAndShowKey() {
+            document.getElementById('section3').classList.remove('active');
+            document.getElementById('section-final').classList.add('active');
+            
+            const currentDay = new Date().getDate();
+            const selectedIndex = currentDay % keysList.length;
+            const activeKey = keysList[selectedIndex];
+            
+            document.getElementById('key-output').textContent = activeKey;
+        }
+
+        // --- FONDO AVANZADO: ESTELAS DE LUZ (LIGHT TRAILS DE ALTA VELOCIDAD) ---
+        function initCyberTrails() {
+            const canvas = document.getElementById('particles-canvas');
+            const ctx = canvas.getContext('2d');
+            let w = canvas.width = window.innerWidth;
+            let h = canvas.height = window.innerHeight;
+            const lines = [];
+
+            window.addEventListener('resize', () => {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
+            });
+
+            class LightTrail {
+                constructor() {
+                    this.reset();
+                    this.y = Math.random() * h; // Posición de inicio aleatoria al arrancar
+                }
+                reset() {
+                    this.x = Math.random() * w;
+                    this.y = -20 - Math.random() * 100;
+                    this.length = Math.random() * 80 + 40; // Longitud del rayo de luz
+                    this.speed = Math.random() * 12 + 6;   // Alta velocidad vertical estilo ráfaga
+                    this.width = Math.random() * 1.5 + 0.5;
+                    this.color = Math.random() > 0.5 ? '#ff0055' : '#00ffff';
+                }
+                move() {
+                    this.y += this.speed;
+                    if (this.y - this.length > h) {
+                        this.reset();
+                    }
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.strokeStyle = this.color;
+                    ctx.lineWidth = this.width;
+                    ctx.moveTo(this.x, this.y);
+                    ctx.lineTo(this.x, this.y - this.length);
+                    ctx.stroke();
+                }
+            }
+
+            // Crear ráfagas paralelas verticales
+            for (let i = 0; i < 35; i++) {
+                lines.push(new LightTrail());
+            }
+
+            function frame() {
+                // Color de fondo negro absoluto con opacidad para generar efecto rastro de luz difuminado
+                ctx.fillStyle = 'rgba(2, 2, 4, 0.15)'; 
+                ctx.fillRect(0, 0, w, h);
+                
+                lines.forEach(line => {
+                    line.move();
+                    line.draw();
+                });
+                requestAnimationFrame(frame);
+            }
+            frame();
+        }
+    </script>
+</body>
+</html>
